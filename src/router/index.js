@@ -7,6 +7,7 @@ import StatsSection from '../components/StatsSection.vue'
 import FiltersSection from '../components/FiltersSection.vue'
 import UnifiedSearchPage from '../components/UnifiedSearchPage.vue'
 import CreditsSection from '../components/CreditsSection.vue'
+import MarkdownPage from '../components/MarkdownPage.vue'
 
 // Home view component
 const HomeView = {
@@ -65,6 +66,30 @@ const routes = [
     component: CreditsSection,
     meta: {
       title: 'Credits & Acknowledgments'
+    }
+  },
+  {
+    path: '/changelog',
+    name: 'Changelog',
+    component: MarkdownPage,
+    props: () => ({ 
+      file: 'docs/CHANGELOG.md', 
+      title: 'Changelog' 
+    }),
+    meta: {
+      title: 'Changelog'
+    }
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: MarkdownPage,
+    props: () => ({ 
+      file: 'README.md', 
+      title: 'About' 
+    }),
+    meta: {
+      title: 'About'
     }
   }
 ]

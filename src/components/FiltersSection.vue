@@ -19,11 +19,6 @@
         </label>
         
 
-        <button @click="toggleTheme" class="theme-btn" title="Toggle theme">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
-          </svg>
-        </button>
 
         <label class="compact-checkbox">
           <input 
@@ -532,18 +527,6 @@ export default {
       characterStore.updateUI('grouping.enabled', !groupingEnabled.value)
     }
     
-    const toggleTheme = () => {
-      const currentTheme = document.body.className
-      if (currentTheme.includes('light-theme')) {
-        document.body.className = 'dark-theme p-dark'
-        document.documentElement.classList.add('p-dark')
-        localStorage.setItem('theme', 'dark')
-      } else {
-        document.body.className = 'light-theme'
-        document.documentElement.classList.remove('p-dark')
-        localStorage.setItem('theme', 'light')
-      }
-    }
     
     const exportCSV = () => {
       // Export functionality to be implemented
@@ -603,7 +586,6 @@ export default {
       formatUltPriorityDisplay,
       toggleShowUnreleased,
       toggleGrouping,
-      toggleTheme,
       exportCSV,
       addSourceTag
     }
@@ -1019,20 +1001,6 @@ export default {
 }
 
 
-.theme-btn {
-  padding: 6px;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  background: var(--bg-secondary);
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.theme-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
-}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

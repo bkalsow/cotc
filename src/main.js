@@ -14,6 +14,7 @@ import Tooltip from 'primevue/tooltip'
 import 'vue-select/dist/vue-select.css'
 import 'primeicons/primeicons.css'
 import './assets/css/ui-components.css'
+import './assets/css/highlight.css'
 
 // Production environment - disable development features
 if (import.meta.env.PROD) {

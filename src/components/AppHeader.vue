@@ -4,7 +4,23 @@
     <div class="header-top">
       <h1>OCTOPATH COTC META GUIDE</h1>
       <div class="header-meta">
-        <a :href="versionLink" class="version" target="_blank" rel="noopener">{{ version }}</a>
+        <button @click="toggleTheme" class="theme-toggle-btn" :title="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'">
+          <!-- Sun icon for dark mode (click to go light) -->
+          <svg v-if="isDarkMode" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.52,9.22 5.25,10 5.11,10.79L3.34,7M3.34,17L5.11,13.21C5.25,14 5.52,14.78 5.94,15.5C6.36,16.22 6.9,16.84 7.5,17.35L3.34,17M20.66,7L16.5,17.35C17.1,16.84 17.64,16.22 18.06,15.5C18.48,14.78 18.75,14 18.89,13.21L20.66,7M20.66,17L18.89,10.79C18.75,10 18.48,9.22 18.06,8.5C17.64,7.78 17.1,7.16 16.5,6.65L20.66,17M12,22L9.61,18.58C10.35,18.85 11.16,19 12,19C12.84,19 13.65,18.85 14.39,18.58L12,22Z"/>
+          </svg>
+          <!-- Moon icon for light mode (click to go dark) -->
+          <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.75,4.09L15.22,6.03L16.13,9.09L13.5,7.28L10.87,9.09L11.78,6.03L9.25,4.09L12.44,4L13.5,1L14.56,4L17.75,4.09M21.25,11L19.61,12.25L20.2,14.23L18.5,13.06L16.8,14.23L17.39,12.25L15.75,11L17.81,10.95L18.5,9L19.19,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95Z"/>
+          </svg>
+        </button>
+        <router-link :to="{ name: 'About' }" class="nav-link about-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12,2C13.1,2 14,2.9 14,4C14,5.1 13.1,6 12,6C10.9,6 10,5.1 10,4C10,2.9 10.9,2 12,2M21,9V7L15,1L9,7V9L15,15L21,9M15,10C14.4,10 14,9.6 14,9S14.4,8 15,8 16,8.4 16,9 15.6,10 15,10M2,20V18H8V20A2,2 0 0,0 10,22H4A2,2 0 0,0 2,20M4,16H6V14H4V16M4,12H6V10H4V12M4,8H6V6H4V8Z"/>
+          </svg>
+          About
+        </router-link>
+        <router-link :to="{ name: 'Changelog' }" class="version" v-tooltip.bottom="'View changelog'">{{ version }}</router-link>
         <a href="https://github.com/vixay/cotc" class="github-link" target="_blank" rel="noopener">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
@@ -59,39 +75,72 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue'
 import { useCharacterStore } from '../stores/character'
 
 export default {
   name: 'AppHeader',
-  data() {
-    return {
-      version: 'Loading...',
-      lastUpdated: 'Loading...',
-      versionLink: 'docs/CHANGELOG.md'
-    }
-  },
   setup() {
     const characterStore = useCharacterStore()
-    return { characterStore }
-  },
-  mounted() {
-    this.loadVersionInfo()
-  },
-  methods: {
-    async loadVersionInfo() {
+    
+    // Reactive data
+    const version = ref('Loading...')
+    const lastUpdated = ref('Loading...')
+    const isDarkMode = ref(true)
+    
+    // Methods
+    const loadVersionInfo = async () => {
       try {
-        // Vue version with character markdown modal support
-        this.version = 'v3.0.0-vue'
-        this.lastUpdated = new Date().toLocaleDateString('en-US', {
+        // Get version from Vite build-time variable
+        version.value = `v${__APP_VERSION__}`
+        lastUpdated.value = new Date().toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'short', 
           day: 'numeric'
         })
       } catch (error) {
         console.warn('Failed to load version info:', error)
-        this.version = 'v3.0.0-vue'
-        this.lastUpdated = 'Unknown'
+        version.value = `v${__APP_VERSION__ || '4.1.0'}`
+        lastUpdated.value = 'Unknown'
       }
+    }
+    
+    const detectCurrentTheme = () => {
+      // Check current body class to detect theme
+      isDarkMode.value = document.body.className.includes('dark-theme')
+    }
+    
+    const toggleTheme = () => {
+      const currentTheme = document.body.className
+      if (currentTheme.includes('light-theme')) {
+        // Switch to dark theme
+        document.body.className = 'dark-theme p-dark manual-theme'
+        document.documentElement.classList.add('p-dark')
+        document.documentElement.classList.add('manual-theme')
+        localStorage.setItem('theme', 'dark')
+        isDarkMode.value = true
+      } else {
+        // Switch to light theme
+        document.body.className = 'light-theme manual-theme'
+        document.documentElement.classList.remove('p-dark')
+        document.documentElement.classList.add('manual-theme')
+        localStorage.setItem('theme', 'light')
+        isDarkMode.value = false
+      }
+    }
+    
+    // Lifecycle
+    onMounted(() => {
+      loadVersionInfo()
+      detectCurrentTheme()
+    })
+    
+    return { 
+      characterStore,
+      version,
+      lastUpdated,
+      isDarkMode,
+      toggleTheme
     }
   }
 }
@@ -100,11 +149,8 @@ export default {
 <style scoped>
 /* Two-row header: Title+meta on top, navigation on bottom */
 header {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 1000 !important;
-  background: var(--bg-primary) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  background: var(--bg-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .header-top {
@@ -150,6 +196,38 @@ header {
 }
 
 .github-link:hover {
+  color: var(--primary-color) !important;
+}
+
+.about-link {
+  color: var(--text-secondary) !important;
+  text-decoration: none !important;
+  font-size: 0.9rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  transition: color 0.2s !important;
+}
+
+.about-link:hover {
+  color: var(--primary-color) !important;
+}
+
+.theme-toggle-btn {
+  background: transparent !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 4px !important;
+  padding: 6px !important;
+  color: var(--text-secondary) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--bg-hover) !important;
   color: var(--primary-color) !important;
 }
 

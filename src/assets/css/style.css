@@ -128,9 +128,9 @@ body.dark-theme {
     --bg-owned: #2a3a4a;
 }
 
-/* Light theme for users who prefer light mode */
+/* Light theme for users who prefer light mode - lower specificity than manual classes */
 @media (prefers-color-scheme: light) {
-    :root {
+    :root:not(.manual-theme) {
         --primary-color: #0066cc;
         --primary-hover: #0052a3;
         --success-color: #28a745;
@@ -343,11 +343,8 @@ header {
 
 /* Legacy header h1 and header-meta rules removed - conflicted with new header structure */
 
-/* Header Sticky Wrapper */
+/* Header Wrapper */
 header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 

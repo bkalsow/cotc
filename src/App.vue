@@ -33,11 +33,13 @@ export default {
       
       // Apply both our custom theme classes AND PrimeVue's expected classes
       if (savedTheme === 'dark') {
-        document.body.className = 'dark-theme p-dark'
+        document.body.className = 'dark-theme p-dark manual-theme'
         document.documentElement.classList.add('p-dark')
+        document.documentElement.classList.add('manual-theme')
       } else {
-        document.body.className = 'light-theme'
+        document.body.className = 'light-theme manual-theme'
         document.documentElement.classList.remove('p-dark')
+        document.documentElement.classList.add('manual-theme')
       }
       
       console.log('🎨 Current body class after setting:', document.body.className)

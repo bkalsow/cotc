@@ -1,0 +1,228 @@
+/* Syntax highlighting styles for code blocks */
+/* Light mode - using app's CSS variables and proper specificity */
+
+body.light-theme .hljs,
+body:not(.dark-theme) .hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1rem;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+body.light-theme .hljs-comment,
+body.light-theme .hljs-quote,
+body:not(.dark-theme) .hljs-comment,
+body:not(.dark-theme) .hljs-quote {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+body.light-theme .hljs-keyword,
+body.light-theme .hljs-selector-tag,
+body.light-theme .hljs-type,
+body:not(.dark-theme) .hljs-keyword,
+body:not(.dark-theme) .hljs-selector-tag,
+body:not(.dark-theme) .hljs-type {
+  color: var(--danger-color);
+  font-weight: 600;
+}
+
+body.light-theme .hljs-literal,
+body.light-theme .hljs-symbol,
+body.light-theme .hljs-bullet,
+body.light-theme .hljs-attribute,
+body:not(.dark-theme) .hljs-literal,
+body:not(.dark-theme) .hljs-symbol,
+body:not(.dark-theme) .hljs-bullet,
+body:not(.dark-theme) .hljs-attribute {
+  color: var(--primary-color);
+}
+
+body.light-theme .hljs-section,
+body.light-theme .hljs-name,
+body:not(.dark-theme) .hljs-section,
+body:not(.dark-theme) .hljs-name {
+  color: var(--success-color);
+}
+
+body.light-theme .hljs-tag,
+body:not(.dark-theme) .hljs-tag {
+  color: var(--text-primary);
+}
+
+/* Light theme syntax highlighting */
+body.light-theme .hljs-title,
+body.light-theme .hljs-attr,
+body.light-theme .hljs-selector-id,
+body.light-theme .hljs-selector-class,
+body.light-theme .hljs-selector-attr,
+body.light-theme .hljs-selector-pseudo,
+body:not(.dark-theme) .hljs-title,
+body:not(.dark-theme) .hljs-attr,
+body:not(.dark-theme) .hljs-selector-id,
+body:not(.dark-theme) .hljs-selector-class,
+body:not(.dark-theme) .hljs-selector-attr,
+body:not(.dark-theme) .hljs-selector-pseudo {
+  color: var(--primary-color);
+}
+
+body.light-theme .hljs-string,
+body.light-theme .hljs-doctag,
+body:not(.dark-theme) .hljs-string,
+body:not(.dark-theme) .hljs-doctag {
+  color: var(--success-color);
+}
+
+body.light-theme .hljs-title.class_,
+body.light-theme .hljs-title.class_.inherited__,
+body.light-theme .hljs-title.function_,
+body:not(.dark-theme) .hljs-title.class_,
+body:not(.dark-theme) .hljs-title.class_.inherited__,
+body:not(.dark-theme) .hljs-title.function_ {
+  color: var(--primary-color);
+}
+
+body.light-theme .hljs-variable,
+body.light-theme .hljs-template-variable,
+body:not(.dark-theme) .hljs-variable,
+body:not(.dark-theme) .hljs-template-variable {
+  color: var(--warning-color);
+}
+
+body.light-theme .hljs-code,
+body:not(.dark-theme) .hljs-code {
+  color: var(--danger-color);
+}
+
+body.light-theme .hljs-number,
+body:not(.dark-theme) .hljs-number {
+  color: var(--primary-color);
+}
+
+body.light-theme .hljs-regexp,
+body:not(.dark-theme) .hljs-regexp {
+  color: var(--success-color);
+}
+
+body.light-theme .hljs-link,
+body:not(.dark-theme) .hljs-link {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+body.light-theme .hljs-meta,
+body:not(.dark-theme) .hljs-meta {
+  color: var(--text-muted);
+}
+
+body.light-theme .hljs-addition,
+body:not(.dark-theme) .hljs-addition {
+  color: var(--success-color);
+  background-color: var(--bg-tertiary, #f0fff4);
+}
+
+body.light-theme .hljs-deletion,
+body:not(.dark-theme) .hljs-deletion {
+  color: var(--danger-color);
+  background-color: var(--bg-tertiary, #ffeef0);
+}
+
+/* Common styles for all themes */
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 600;
+}
+
+/* Language-specific adjustments */
+body.light-theme .hljs-bash .hljs-built_in,
+body:not(.dark-theme) .hljs-bash .hljs-built_in {
+  color: var(--primary-color);
+}
+
+body.dark-theme .hljs-bash .hljs-built_in {
+  color: var(--info-color);
+}
+
+body.light-theme .hljs-json .hljs-attr,
+body:not(.dark-theme) .hljs-json .hljs-attr {
+  color: var(--primary-color);
+}
+
+body.dark-theme .hljs-json .hljs-attr {
+  color: var(--primary-color);
+}
+
+body.light-theme .hljs-json .hljs-string,
+body:not(.dark-theme) .hljs-json .hljs-string {
+  color: var(--success-color);
+}
+
+body.dark-theme .hljs-json .hljs-string {
+  color: var(--info-color);
+}
+
+/* Dark mode adjustments - respect app's dark theme class */
+body.dark-theme .hljs {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+body.dark-theme .hljs-comment,
+body.dark-theme .hljs-quote {
+  color: var(--text-muted);
+}
+
+body.dark-theme .hljs-keyword,
+body.dark-theme .hljs-selector-tag,
+body.dark-theme .hljs-type {
+  color: var(--danger-color);
+}
+
+body.dark-theme .hljs-literal,
+body.dark-theme .hljs-symbol,
+body.dark-theme .hljs-bullet,
+body.dark-theme .hljs-attribute {
+  color: var(--info-color);
+}
+
+body.dark-theme .hljs-string,
+body.dark-theme .hljs-doctag {
+  color: var(--info-color);
+}
+
+body.dark-theme .hljs-title.class_,
+body.dark-theme .hljs-title.class_.inherited__,
+body.dark-theme .hljs-title.function_,
+body.dark-theme .hljs-title,
+body.dark-theme .hljs-attr,
+body.dark-theme .hljs-selector-id,
+body.dark-theme .hljs-selector-class,
+body.dark-theme .hljs-selector-attr,
+body.dark-theme .hljs-selector-pseudo {
+  color: var(--primary-color);
+}
+
+body.dark-theme .hljs-variable,
+body.dark-theme .hljs-template-variable {
+  color: var(--warning-color);
+}
+
+body.dark-theme .hljs-number {
+  color: var(--info-color);
+}
+
+body.dark-theme .hljs-section,
+body.dark-theme .hljs-name,
+body.dark-theme .hljs-regexp {
+  color: var(--success-color);
+}
