@@ -4,18 +4,28 @@ A community-maintained meta guide for Octopath Traveler: Champions of the Contin
 
 🌐 **Live Site**: https://vixay.github.io/cotc/
 
-## What's New in v4.0.0
+## What's New in v4.1.0
+
+⚡ **Icon Registry System** - Unified icon management with official COTC Wiki support!
+
+- **⚡ Icon Registry**: Consolidated 4 duplicate implementations into unified system with 171+ official icons
+- **📄 Markdown Processing**: Theme-aware documentation with dynamic version display from package.json
+- **🗃️ Database Quality**: Fixed critical A4 tier/priority mismatches affecting 10 characters
+- **🗂️ Database Organization**: Extracted metadata to separate sidecar file for cleaner structure
+- **🎨 Search Results**: Improved table layout and column spacing in "Search All" page
+- **🏷️ Accessory Badges**: Enhanced badge colors for better visual identification
+
+[View Full Changelog](docs/changelog.md#410---2025-08-26)
+
+### Previous Major Version (v4.0.0)
 
 🔗 **Interactive Priority Links** - Click priority values to jump directly to character details!
 
 - **🔗 Clickable Priorities**: A4 and Ultimate priority values now open character modals with smart section targeting
 - **🎯 Smart Navigation**: Auto-scroll to awakening accessory or ultimate technique details
-- **✨ Visual Feedback**: Smooth highlighting and hover tooltips for better user experience
 - **🔍 Enhanced Search**: Unified "Search All" page with 1,800+ skills and accessories
-- **🧭 Better Navigation**: Clearer menu organization and page transitions
-- **🐛 Interface Polish**: Fixed cursor behaviors and improved overall responsiveness
 
-[View Full Changelog](docs/CHANGELOG.md#400---2025-08-25)
+[View v4.0.0 Details](docs/changelog.md#400---2025-08-25)
 
 ### Previous Major Version (v3.0.0)
 
