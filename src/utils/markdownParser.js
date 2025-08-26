@@ -1,6 +1,7 @@
 // Character markdown file mapping and parsing utilities
 
 import { paths } from './pathUtils.js'
+import { getIcon, getElementIcon, getWeaponIcon } from './iconRegistry.js'
 
 // Get replacement SVG for Notion emoji URLs
 function getNotionEmojiReplacement(notionUrl) {
@@ -440,90 +441,66 @@ function normalizeIconName(iconName) {
     return normalized;
 }
 
-// Get shared icon path
+// Get shared icon path using unified icon registry
 function getSharedIconPath(iconName) {
-    const sharedIcons = {
-        // Stat boosts - map to wiki-icons
-        'Phys_Atk_Boost.png': 'wiki-icons/Buff_Phys._Atk._Up.png',
-        'Elem_Atk_Boost.png': 'wiki-icons/Buff_Elem._Atk._Up.png',
-        'Elem_atk_Boost.png': 'wiki-icons/Buff_Elem._Atk._Up.png',
-        'BP_Recovery_Boost.png': 'wiki-icons/Buff_BP_Recovery_Up.png',
-        'BP_Recovery.png': 'wiki-icons/Buff_BP_Recovery_Up.png',
-        'Critical_Force.png': 'wiki-icons/Buff_Crit._Up.png',
-        'Critical_Elemental_Damage.png': 'wiki-icons/Buff_Crit._Up.png',
-        'Crit_Up.png': 'wiki-icons/Buff_Crit._Up.png',
-        'Max_HP_Boost.png': 'wiki-icons/Buff_HP_Barrier.png',
-        'Max_HP_Up.png': 'wiki-icons/Buff_HP_Barrier.png',
-        'HP_Boost.png': 'wiki-icons/Buff_HP_Barrier.png',
-        'Speed_Up.png': 'wiki-icons/Buff_Spd._Up.png',
-        'Spd_Up.png': 'wiki-icons/Buff_Spd._Up.png',
-        'Speed_Drain.png': 'wiki-icons/Debuff_Spd._Down.png',
-        'Elem_Def_Up.png': 'wiki-icons/Buff_Elem._Def._Up.png',
-        'Phys_Def_Up.png': 'wiki-icons/Buff_Phys._Def._Up.png',
-        'Phys_Def_Boost.png': 'wiki-icons/Buff_Phys._Def._Up.png',
-        'SP_Stock.png': 'wiki-icons/Buff_SP_Stock.png',
-        'SP_Recovery.png': 'wiki-icons/Buff_SP_Stock.png',
-        'SP_Regen.png': 'wiki-icons/Buff_SP_Stock.png',
-        
-        // Weapon icons - map to available wiki-icons weapon types
-        'Sword.png': 'wiki-icons/Type_Swords.png',
-        'Dagger.png': 'wiki-icons/Type_Daggers.png',
-        'Staff_Staves.png': 'wiki-icons/Type_Staves.png',
-        'Bow.png': 'wiki-icons/Type_Bows.png',
-        'Axe.png': 'wiki-icons/Type_Axes.png',
-        'Spear_Polearm.png': 'wiki-icons/Type_Polearms.png',
-        'Fan.png': 'wiki-icons/Type_Fans.png',
-        'Tome.png': 'wiki-icons/Type_Tomes.png',
-        
-        // Element icons - map to available wiki-icons
-        'Lightning_Thunder.png': 'wiki-icons/Type_Lightning.png',
-        'Dark.png': 'wiki-icons/Type_Dark.png',
-        'Fire.png': 'wiki-icons/Type_Fire.png',
-        'Ice.png': 'wiki-icons/Type_Ice.png',
-        'Wind.png': 'wiki-icons/Type_Wind.png',
-        'Light.png': 'wiki-icons/Type_Light.png',
-        
-        // Resistances
-        'Fire_Resilience.png': 'wiki-icons/Buff_Fire_Res._Up.png',
-        'Ice_Resilience.png': 'wiki-icons/Buff_Ice_Res._Up.png',
-        'Lightning_Resilience.png': 'wiki-icons/Buff_Lightning_Res._Up.png',
-        'Wind_Resilience.png': 'wiki-icons/Buff_Wind_Res._Up.png',
-        'Light_Resilience.png': 'wiki-icons/Buff_Light_Res._Up.png',
-        'Dark_Resilience.png': 'wiki-icons/Buff_Dark_Res._Up.png',
-        
-        // Special abilities
-        'Thief_Evasion.png': 'wiki-icons/Buff_Thief\'s_Evasion.png',
-        'Thiefs_Evasion.png': 'wiki-icons/Buff_Thief\'s_Evasion.png',
-        'Vim_and_Vigor.png': 'wiki-icons/Buff_Vim_and_Vigor.png',
-        'Sidesstep.png': 'wiki-icons/Buff_Evade_Phys._Atk.png',
-        
-        // Common icons
-        'Awakening_IV.png': 'icons/awakening/Awakening_IV.png',
-        'Accessory.png': 'icons/common/Accessory.png',
-        
-        // Status effects - map to Status_ prefixed icons
-        'Corrosion.png': 'wiki-icons/Status_Corrosion.png',
-        'Frostbite.png': 'wiki-icons/Status_Frostbite.png',
-        'Shock.png': 'wiki-icons/Status_Shock.png',
-        'Enchant.png': 'wiki-icons/Status_Enchant.png',
-        'Combustion.png': 'wiki-icons/Status_Combust.png',
-        
-        // Direct mapping for existing wiki-icons
-        'Buff_Phys._Atk._Up.png': 'wiki-icons/Buff_Phys._Atk._Up.png',
-        'Buff_Elem._Atk._Up.png': 'wiki-icons/Buff_Elem._Atk._Up.png',
-        'Buff_Spd._Up.png': 'wiki-icons/Buff_Spd._Up.png',
-        'Buff_Phys._Def._Up.png': 'wiki-icons/Buff_Phys._Def._Up.png',
-        'Buff_Elem._Def._Up.png': 'wiki-icons/Buff_Elem._Def._Up.png',
-        'Buff_Crit._Up.png': 'wiki-icons/Buff_Crit._Up.png',
-        'Buff_SP_Stock.png': 'wiki-icons/Buff_SP_Stock.png',
-        'Buff_BP_Recovery_Up.png': 'wiki-icons/Buff_BP_Recovery_Up.png',
-        'Buff_HP_Barrier.png': 'wiki-icons/Buff_HP_Barrier.png'
+    // Normalize the icon name to remove variants
+    const normalizedName = normalizeIconName(iconName);
+    
+    // Handle legacy mappings for special cases
+    const legacyMappings = {
+        'Phys_Atk_Boost.png': 'phys_atk_up',
+        'Elem_Atk_Boost.png': 'elem_atk_up',
+        'Elem_atk_Boost.png': 'elem_atk_up',
+        'BP_Recovery_Boost.png': 'bp_recovery_up',
+        'BP_Recovery.png': 'bp_recovery_up',
+        'Critical_Force.png': 'crit_up',
+        'Critical_Elemental_Damage.png': 'crit_up',
+        'Max_HP_Boost.png': 'hp_barrier',
+        'Max_HP_Up.png': 'hp_barrier',
+        'HP_Boost.png': 'hp_barrier',
+        'Speed_Drain.png': 'spd_down',
+        'Phys_Def_Boost.png': 'phys_def_up',
+        'SP_Recovery.png': 'sp_stock',
+        'SP_Regen.png': 'sp_stock',
+        'Fire_Resilience.png': 'fire_res_up',
+        'Ice_Resilience.png': 'ice_res_up',
+        'Lightning_Resilience.png': 'lightning_res_up',
+        'Wind_Resilience.png': 'wind_res_up',
+        'Light_Resilience.png': 'light_res_up',
+        'Dark_Resilience.png': 'dark_res_up',
+        'Thief_Evasion.png': 'thiefs_evasion',
+        'Thiefs_Evasion.png': 'thiefs_evasion',
+        'Sidesstep.png': 'evade_phys',
+        'Staff_Staves.png': 'staff',
+        'Spear_Polearm.png': 'polearm',
+        'Lightning_Thunder.png': 'lightning',
+        'Combustion.png': 'combust',
+        // Legacy paths for non-wiki icons
+        'Awakening_IV.png': 'awakening_4',
+        'Accessory.png': 'accessory'
     };
-      // Normalize the icon name to remove variants
-      const normalizedName = normalizeIconName(iconName);
-      const iconPath = sharedIcons[normalizedName];
-      // If we have a mapping, use it; otherwise fall back to the original path
-      return iconPath ? paths.images(iconPath) : paths.images(iconName);
+    
+    // First try the legacy mapping
+    const mappedName = legacyMappings[normalizedName] || normalizedName;
+    
+    // Try to detect icon using the registry
+    const iconPath = getIcon(mappedName);
+    
+    // If found in registry, return it
+    if (iconPath) {
+        return iconPath;
+    }
+    
+    // Handle special cases for non-wiki icons
+    if (normalizedName === 'Awakening_IV.png') {
+        return paths.images('icons/awakening/Awakening_IV.png');
+    }
+    if (normalizedName === 'Accessory.png') {
+        return paths.images('icons/common/Accessory.png');
+    }
+    
+    // Final fallback to original path
+    return paths.images(iconName);
 }
 
 // Get attribute icon path

@@ -6,6 +6,7 @@
  */
 
 import { paths } from './pathUtils.js'
+import { getStatIcon } from './iconRegistry.js'
 
 /**
  * Get stone class for awakening stones
@@ -403,32 +404,8 @@ export const getStatIconClass = (statType, size = '') => {
   return `${baseClass} ${statClass}`
 }
 
-/**
- * Get stat icon path based on stat type
- * Official icons sourced from COTC Wiki: https://octopathtraveler.fandom.com/wiki/Status_Effects_(Champions_of_the_Continent)
- * @param {string} statType - Type of stat
- * @returns {string} Icon path or empty string if no icon available
- */
-export const getStatIconPath = (statType) => {
-  const iconMap = {
-    'patk': paths.images('wiki-icons/PhysAtk.png'),
-    'physatk': paths.images('wiki-icons/PhysAtk.png'),
-    'eatk': paths.images('wiki-icons/ElemAtk.png'),
-    'elematk': paths.images('wiki-icons/ElemAtk.png'),
-    'crit': paths.images('wiki-icons/Critical.png'),
-    'critical': paths.images('wiki-icons/Critical.png'),
-    'sp': paths.images('wiki-icons/SP.png'),
-    'hp': paths.images('wiki-icons/HP.png'),
-    'spd': paths.images('wiki-icons/Speed.png'),
-    'speed': paths.images('wiki-icons/Speed.png'),
-    'edef': paths.images('wiki-icons/ElemDef.png'),
-    'elemdef': paths.images('wiki-icons/ElemDef.png'),
-    'pdef': paths.images('wiki-icons/PhysDef.png'),
-    'physdef': paths.images('wiki-icons/PhysDef.png')
-  }
-  
-  return iconMap[statType.toLowerCase()] || ''
-}
+// getStatIcon is imported directly from iconRegistry
+// Returns icon path or null - no wrapper needed
 
 /**
  * Format stat display with optional icon
@@ -440,7 +417,7 @@ export const getStatIconPath = (statType) => {
 export const formatStatWithIcon = (statType, value, showIcon = true) => {
   if (!statType || !value || value <= 0) return ''
   
-  const iconPath = showIcon ? getStatIconPath(statType) : ''
+  const iconPath = showIcon && getStatIcon(statType)
   const iconHtml = iconPath ? `<img src="${iconPath}" class="ui-stat-icon-sm" alt="${statType}" />` : ''
   const statText = `${statType.toUpperCase()}: ${value}`
   

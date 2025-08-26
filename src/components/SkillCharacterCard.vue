@@ -241,6 +241,7 @@
 <script>
 import { ref, computed, inject } from 'vue'
 import { paths } from '../utils/pathUtils'
+import { getElementIcon, getWeaponIcon } from '../utils/iconRegistry.js'
 
 export default {
   name: 'SkillCharacterCard',
@@ -344,20 +345,8 @@ export default {
       return `element-${element.toLowerCase()}`
     }
 
-    const getElementIcon = (element) => {
-      return paths.images(`elements/${element}.png`)
-    }
-
-    const getWeaponIcon = (weapon) => {
-      // Handle weapon name variations
-      const weaponMap = {
-        'Spear': 'Spear_Polearm',
-        'Polearm': 'Spear_Polearm',
-        'Staff': 'Staff_Staves'
-      }
-      const fileName = weaponMap[weapon] || weapon
-      return paths.images(`weapons/${fileName}.png`)
-    }
+    // getElementIcon and getWeaponIcon are imported directly from iconRegistry
+    // No wrapper functions needed - registry handles all icon logic
 
     const getWeaknessClass = (weakness) => {
       const isElement = ['Fire', 'Ice', 'Lightning', 'Wind', 'Light', 'Dark'].includes(weakness)

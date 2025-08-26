@@ -511,6 +511,7 @@ import { useCharacterStore } from '../stores/character'
 import { useToast } from 'primevue/usetoast'
 import CharacterPortrait from './CharacterPortrait.vue'
 import { paths } from '../utils/pathUtils.js'
+import { getStatIcon, getIconsForTags } from '../utils/iconRegistry.js'
 
 // PrimeVue Components
 import InputText from 'primevue/inputtext'
@@ -1319,36 +1320,8 @@ export default {
       return 'secondary'
     }
 
-    const getStatIcon = (statType) => {
-      if (!statType || typeof statType !== 'string') return null
-      
-      const statMap = {
-        // Database stat names to wiki-icons (new approach)
-        'patk': 'Buff_Phys._Atk._Up.png',
-        'eatk': 'Buff_Elem._Atk._Up.png',
-        'pdef': 'Buff_Phys._Def._Up.png',
-        'edef': 'Buff_Elem._Def._Up.png',
-        'crit': 'Buff_Crit._Up.png',
-        'spd': 'Buff_Spd._Up.png',
-        'speed': 'Buff_Spd._Up.png',
-        'sp': 'Buff_SP_Stock.png',
-        'hp': 'Buff_HP_Barrier.png',
-        // Alternative names
-        'physical_attack': 'Buff_Phys._Atk._Up.png',
-        'elemental_attack': 'Buff_Elem._Atk._Up.png',
-        'physical_defense': 'Buff_Phys._Def._Up.png',
-        'elemental_defense': 'Buff_Elem._Def._Up.png',
-        'critical': 'Buff_Crit._Up.png',
-        'phys_atk': 'Buff_Phys._Atk._Up.png',
-        'elem_atk': 'Buff_Elem._Atk._Up.png',
-        'phys_def': 'Buff_Phys._Def._Up.png',
-        'elem_def': 'Buff_Elem._Def._Up.png'
-      }
-      
-      const normalizedStat = statType.toLowerCase().replace(/\s+/g, '_')
-      const iconFile = statMap[normalizedStat]
-      return iconFile ? paths.images(`wiki-icons/${iconFile}`) : null
-    }
+    // getStatIcon imported directly from iconRegistry
+    // Registry already handles validation and null checks
 
     const formatStatValue = (value) => {
       if (!value) return ''
