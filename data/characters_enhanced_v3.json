@@ -68675,7 +68675,7 @@
         }
       },
       "influence": "Wealth",
-      "notes": "Good early debuffer, weak endgame. Key abilities: One of the best debuffers in game, Wind dagger specialist",
+      "notes": "Good early debuffer, weak endgame. Key abilities: One of the best debuffers in game, Fire dagger specialist",
       "prioritySource": {
         "evaluator": "Drayleb",
         "sourceUrl": "https://www.reddit.com/user/Drayleb/",
@@ -68704,7 +68704,7 @@
       "overallTier": "S+",
       "keySkills": [
         "One of the best debuffers in game",
-        "Wind dagger specialist",
+        "Fire dagger specialist",
         "Endgame viable debuffing"
       ],
       "canOverclass": true
